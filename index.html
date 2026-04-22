@@ -1,25 +1,23 @@
-
-
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>HAMSTER BANK | Ultimate UI</title>
+    <!-- Эта строка делает сайт нормальным на телефонах -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAMSTER BANK | Система кредитования</title>
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { 
             background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); 
             color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh;
+            padding: 20px;
         }
 
         .calc-card { 
             background: #11100f; border: 1px solid #1f1d1c; border-radius: 40px; 
-            width: 1100px; padding: 60px; 
-            display: grid; 
-            /* ГЛАВНОЕ ИЗМЕНЕНИЕ: Лево — 2 части, Право — 1 часть (делаем поля шире) */
-            grid-template-columns: 2fr 1fr; 
+            width: 100%; max-width: 1100px; padding: 60px; 
+            display: grid; grid-template-columns: 2fr 1fr; 
             gap: 40px; position: relative; box-shadow: 0 50px 100px rgba(0,0,0,0.8);
         }
 
@@ -34,7 +32,6 @@
         .left h1 span { color: #a3ff12; }
         .sub { font-size: 9px; color: #222; font-weight: 900; margin-bottom: 40px; text-transform: uppercase; }
 
-        /* Поля ввода теперь растягиваются */
         .row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
         label { display: block; font-size: 9px; color: #222; font-weight: 900; margin-bottom: 10px; text-transform: uppercase; }
         input { 
@@ -42,27 +39,43 @@
             padding: 20px; color: white; font-weight: 700; font-size: 16px; outline: none;
         }
 
-        /* ПРАВАЯ ПАНЕЛЬ СТАЛА КОМПАКТНЕЕ */
         .right-panel { 
             background: #0a0908; border: 1px solid #161514; border-radius: 30px; 
-            padding: 30px; /* Уменьшил внутренние отступы */
-            display: flex; flex-direction: column; justify-content: space-between;
-            margin-top: 50px; height: calc(100% - 50px);
-            max-width: 320px; /* Ограничил ширину, чтобы не была огромной */
+            padding: 30px; display: flex; flex-direction: column; justify-content: space-between;
+            margin-top: 50px; min-height: 350px;
         }
 
         .stats-top { display: flex; justify-content: space-between; margin-bottom: 20px; }
         .stat-item span { font-size: 8px; color: #2a2827; font-weight: 900; display: block; margin-bottom: 10px; }
-        .stat-item b { font-size: 14px; font-weight: 900; } /* Чуть уменьшил текст */
+        .stat-item b { font-size: 14px; font-weight: 900; }
 
         .total-area { margin-top: auto; padding-top: 20px; }
-        /* Ноль теперь не такой гигантский, чтобы влезть в узкую панель */
         .total-area h2 { font-size: 70px; font-weight: 900; color: #a3ff12; line-height: 0.8; margin-top: 10px; }
 
         .btn-main { 
             background: #a3ff12; color: black; border: none; padding: 20px; 
             border-radius: 15px; font-weight: 900; font-size: 13px; text-transform: uppercase; 
             cursor: pointer; margin-top: 25px;
+        }
+
+        /* Адаптация для мобилок */
+        @media (max-width: 900px) {
+            body { padding: 10px; }
+            .calc-card { 
+                grid-template-columns: 1fr; 
+                padding: 40px 20px; 
+                border-radius: 25px;
+            }
+            .tabs { 
+                position: relative; top: 0; right: 0; 
+                justify-content: center; margin-bottom: 20px; 
+            }
+            .left h1 { font-size: 36px; text-align: center; }
+            .left .sub { text-align: center; }
+            .row { grid-template-columns: 1fr; }
+            .right-panel { margin-top: 20px; width: 100%; }
+            .total-area h2 { font-size: 50px; text-align: center; }
+            .total-area label { text-align: center; display: block; }
         }
     </style>
 </head>
@@ -107,7 +120,6 @@
 
     <script>
         let md = 'c';
-        // ТВОЙ ВЕБХУК УЖЕ ТУТ
         const webhookURL = "https://discordapp.com";
 
         function m(v) {

@@ -13,7 +13,7 @@
             color: white; 
             display: flex; 
             justify-content: center; 
-            align-items: center; /* Центровка для ПК */
+            align-items: center; 
             min-height: 100vh;
         }
 
@@ -68,64 +68,46 @@
             cursor: pointer; margin-top: 25px;
         }
 
-        /* --- МАГИЯ ДЛЯ ТЕЛЕФОНОВ (FULL SCREEN) --- */
         @media (max-width: 900px) {
-            body { 
-                align-items: flex-start; /* Убираем центровку по вертикали */
-                background: #11100f;   /* Делаем фон всей страницы как у карточки */
-            }
+            body { align-items: flex-start; background: #11100f; }
             .calc-card { 
                 grid-template-columns: 1fr; 
                 padding: 30px 20px; 
-                border-radius: 0;      /* Убираем скругления */
-                border: none;          /* Убираем рамки */
-                box-shadow: none;      /* Убираем тени */
-                min-height: 100vh;     /* Растягиваем на всю высоту экрана */
+                border-radius: 0; 
+                border: none; 
+                box-shadow: none; 
+                min-height: 100vh;
             }
-            .tabs { 
-                position: relative; top: 0; right: 0; 
-                justify-content: center; margin-bottom: 20px; 
-            }
+            .tabs { position: relative; top: 0; right: 0; justify-content: center; margin-bottom: 20px; }
             .left h1 { font-size: 34px; text-align: center; }
             .left .sub { text-align: center; margin-bottom: 30px; }
             .row { grid-template-columns: 1fr; }
-            .right-panel { 
-                margin-top: 20px; 
-                width: 100%; 
-                min-height: auto; 
-                padding: 25px;
-            }
+            .right-panel { margin-top: 20px; width: 100%; min-height: auto; padding: 25px; }
             .total-area h2 { font-size: 55px; text-align: center; }
             .total-area label { text-align: center; display: block; }
         }
     </style>
 </head>
 <body>
-
     <div class="calc-card">
         <div class="tabs">
             <div id="tc" class="tab active" onclick="m('c')">Кредит</div>
             <div id="tv" class="tab" onclick="m('v')">Вклад</div>
         </div>
-
         <div class="left">
             <h1 id="h">Расчет <span>кредита</span></h1>
             <div class="sub">СИСТЕМА МОМЕНТАЛЬНОГО ОБСЛУЖИВАНИЯ HAMSTER BANK.</div>
-
             <div class="row">
                 <div><label>Никнейм</label><input type="text" id="nick" placeholder="Введите ник"></div>
                 <div><label>Discord ID</label><input type="text" id="discord" placeholder="Ваш ID"></div>
             </div>
-
             <label id="ls">Сумма кредита</label>
             <input type="number" id="s" placeholder="Введите сумму" style="margin-bottom: 15px;" oninput="c()">
-
             <div class="row">
                 <div><label>Срок (дни)</label><input type="number" id="d" placeholder="Укажите срок" oninput="c()"></div>
                 <div><label>Промокод</label><input type="text" placeholder="Если есть"></div>
             </div>
         </div>
-
         <div class="right-panel">
             <div class="stats-top">
                 <div class="stat-item"><span>СТАВКА</span><b id="rate">50% / МЕС.</b></div>
@@ -153,7 +135,6 @@
             document.getElementById('rate').innerText = v === 'c' ? '50% / МЕС.' : '25% / МЕС.';
             c();
         }
-
         function c() {
             let s = document.getElementById('s').value || 0;
             let d = document.getElementById('d').value || 0;
@@ -162,19 +143,13 @@
             document.getElementById('over').innerText = '+ $' + o;
             document.getElementById('total').innerText = '$' + (s > 0 ? (Number(s) + o) : 0);
         }
-
         async function sendToDiscord() {
             const nick = document.getElementById('nick').value;
             const discordID = document.getElementById('discord').value;
             const sum = document.getElementById('s').value;
             const days = document.getElementById('d').value;
             const total = document.getElementById('total').innerText;
-
-            if (!nick || !sum || !days) {
-                alert("Заполни все поля!");
-                return;
-            }
-
+            if (!nick || !sum || !days) { alert("Заполни все поля!"); return; }
             const message = {
                 embeds: [{
                     title: `🐹 Новая заявка: ${md === 'c' ? 'КРЕДИТ' : 'ВКЛАД'}`,
@@ -189,13 +164,10 @@
                     footer: { text: "Hamster Bank System" }
                 }]
             };
-
             try {
                 await fetch(webhookURL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(message) });
                 alert("Заявка отправлена!");
-            } catch (e) {
-                alert("Ошибка отправки.");
-            }
+            } catch (e) { alert("Ошибка отправки."); }
         }
     </script>
 </body>

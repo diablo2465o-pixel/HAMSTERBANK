@@ -2,23 +2,33 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <!-- Эта строка делает сайт нормальным на телефонах -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>HAMSTER BANK | Система кредитования</title>
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        
         body { 
-            background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); 
-            color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh;
-            padding: 20px;
+            background: #050505; 
+            color: white; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh;
         }
 
         .calc-card { 
-            background: #11100f; border: 1px solid #1f1d1c; border-radius: 40px; 
-            width: 100%; max-width: 1100px; padding: 60px; 
-            display: grid; grid-template-columns: 2fr 1fr; 
-            gap: 40px; position: relative; box-shadow: 0 50px 100px rgba(0,0,0,0.8);
+            background: #11100f; 
+            border: 1px solid #1f1d1c; 
+            border-radius: 40px; 
+            width: 100%; 
+            max-width: 1100px; 
+            padding: 60px; 
+            display: grid; 
+            grid-template-columns: 2fr 1fr; 
+            gap: 40px; 
+            position: relative; 
+            box-shadow: 0 50px 100px rgba(0,0,0,0.8);
         }
 
         .tabs { position: absolute; top: 40px; right: 60px; display: flex; gap: 10px; z-index: 10; }
@@ -58,23 +68,34 @@
             cursor: pointer; margin-top: 25px;
         }
 
-        /* Адаптация для мобилок */
+        /* --- МАГИЯ ДЛЯ ТЕЛЕФОНОВ (FULL SCREEN) --- */
         @media (max-width: 900px) {
-            body { padding: 10px; }
+            body { 
+                align-items: flex-start; /* Убираем центровку по вертикали */
+                background: #11100f;   /* Делаем фон всей страницы как у карточки */
+            }
             .calc-card { 
                 grid-template-columns: 1fr; 
-                padding: 40px 20px; 
-                border-radius: 25px;
+                padding: 30px 20px; 
+                border-radius: 0;      /* Убираем скругления */
+                border: none;          /* Убираем рамки */
+                box-shadow: none;      /* Убираем тени */
+                min-height: 100vh;     /* Растягиваем на всю высоту экрана */
             }
             .tabs { 
                 position: relative; top: 0; right: 0; 
                 justify-content: center; margin-bottom: 20px; 
             }
-            .left h1 { font-size: 36px; text-align: center; }
-            .left .sub { text-align: center; }
+            .left h1 { font-size: 34px; text-align: center; }
+            .left .sub { text-align: center; margin-bottom: 30px; }
             .row { grid-template-columns: 1fr; }
-            .right-panel { margin-top: 20px; width: 100%; }
-            .total-area h2 { font-size: 50px; text-align: center; }
+            .right-panel { 
+                margin-top: 20px; 
+                width: 100%; 
+                min-height: auto; 
+                padding: 25px;
+            }
+            .total-area h2 { font-size: 55px; text-align: center; }
             .total-area label { text-align: center; display: block; }
         }
     </style>
